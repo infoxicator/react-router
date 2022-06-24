@@ -1902,6 +1902,14 @@ export function createStaticHandler(init: StaticHandlerInit): StaticHandler {
       throw new Error("query() aborted");
     }
 
+    // Can't do anything with these without the Remix side of things, so just
+    // cancel them for no
+    results.forEach((result) => {
+      if (isDeferredResult(result)) {
+        result.deferredData.cancel();
+      }
+    });
+
     // Process and commit output from loaders
     let { loaderData, errors } = processRouteLoaderData(
       matches,
