@@ -835,7 +835,7 @@ describe("a router", () => {
           hydrationData: {},
         })
       ).toThrowErrorMatchingInlineSnapshot(
-        `"You must provide a non-empty routes array to use Data Routers"`
+        `"You must provide a non-empty routes array to createRouter"`
       );
     });
 
