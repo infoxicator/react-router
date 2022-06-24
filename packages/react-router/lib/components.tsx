@@ -79,6 +79,10 @@ export function useRenderDataRouter({
   // Sync router state to our component state to force re-renders
   let state: RouterState = useSyncExternalStoreShim(
     router.subscribe,
+    () => router.state,
+    // We have to provide this so React@18 doesn't complain during hydration,
+    // but we pass our serialized hydration data into the router so state here
+    // is already synced with what the server saw
     () => router.state
   );
 
@@ -109,7 +113,7 @@ export function useRenderDataRouter({
           navigationType={state.historyAction}
           navigator={navigator}
         >
-          <DataRoutes routes={routes} children={children} />
+          <DataRoutes routes={router.routes} children={children} />
         </Router>
       </DataRouterStateContext.Provider>
     </DataRouterContext.Provider>
